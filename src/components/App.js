@@ -1,4 +1,5 @@
 import React from "react";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -9,6 +10,10 @@ import api from "../utils/Api";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import ProtectedRoute from "./ProtectedRoute";
+import Login from "./Login";
+import Register from "./Register";
+import InfoTooltip from "./InfoTooltip";
 
 function App() {
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false);
@@ -16,10 +21,14 @@ function App() {
     React.useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
   const [isDeleteCardPopupOpen, setDeleteCardPopupOpen] = React.useState(false);
+  const [isInfoTooltipOpen, setInfoTooltipOpen] = React.useState(false);
+  const [isRegistrationOK, setRegistrationOK] = React.useState(false);
   const [selectedCard, setSelectedCard] = React.useState({
     name: "",
     link: "",
   });
+
+  const [headerText, setHeaderText] = React.useState("Регистрация");
 
   const [currentUser, setCurrentUser] = React.useState({
     name: "",
@@ -85,11 +94,16 @@ function App() {
     setAddPlacePopupOpen(true);
   }
 
+  function openInfoTooltip() {
+    setInfoTooltipOpen(true);
+  }
+
   function closeAllPopups() {
     isAddPlacePopupOpen && setAddPlacePopupOpen(false);
     isEditProfilePopupOpen && setEditProfilePopupOpen(false);
     isEditAvatarPopupOpen && setEditAvatarPopupOpen(false);
     isDeleteCardPopupOpen && setDeleteCardPopupOpen(false);
+    isInfoTooltipOpen && setInfoTooltipOpen(false);
     selectedCard.link && setSelectedCard({ name: "", link: "" });
   }
 
@@ -123,46 +137,67 @@ function App() {
       .catch(err => console.log(err));
   }
 
+  function handleRegisterSubmit() {}
+
+  function handleLoginSubmit() {}
+
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <div className="page">
-        <div className="page__container">
-          <Header />
-          <Main
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            cards={cards}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
-          />
-          <Footer />
-          <EditProfilePopup
-            isOpen={isEditProfilePopupOpen}
-            onClose={closeAllPopups}
-            onUpdateUser={handleUpdateUser}
-          />
-          <AddPlacePopup
-            isOpen={isAddPlacePopupOpen}
-            onClose={closeAllPopups}
-            onAddPlace={handleAddPlaceSubmit}
-          />
-          <EditAvatarPopup
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar}
-          />
-          <PopupWithForm
-            name="delete-card"
-            title="Вы уверены?"
-            isOpen={isDeleteCardPopupOpen}
-            onClose={closeAllPopups}
-          />
-          <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+    <BrowserRouter>
+      <CurrentUserContext.Provider value={currentUser}>
+        <div className="page">
+          <div className="page__container">
+            <Header text={headerText} />
+            <Switch>
+              <Route exact path="/">
+                <Main
+                  onEditProfile={handleEditProfileClick}
+                  onAddPlace={handleAddPlaceClick}
+                  onEditAvatar={handleEditAvatarClick}
+                  onCardClick={handleCardClick}
+                  cards={cards}
+                  onCardLike={handleCardLike}
+                  onCardDelete={handleCardDelete}
+                />
+              </Route>
+              <Route path="/sign-up">
+                <Login onSubmit={handleLoginSubmit} />
+              </Route>
+              <Route path="/sign-in">
+                <Register onSubmit={handleRegisterSubmit} />
+              </Route>
+            </Switch>
+            <Footer />
+            <EditProfilePopup
+              isOpen={isEditProfilePopupOpen}
+              onClose={closeAllPopups}
+              onUpdateUser={handleUpdateUser}
+            />
+            <AddPlacePopup
+              isOpen={isAddPlacePopupOpen}
+              onClose={closeAllPopups}
+              onAddPlace={handleAddPlaceSubmit}
+            />
+            <EditAvatarPopup
+              isOpen={isEditAvatarPopupOpen}
+              onClose={closeAllPopups}
+              onUpdateAvatar={handleUpdateAvatar}
+            />
+            <PopupWithForm
+              name="delete-card"
+              title="Вы уверены?"
+              isOpen={isDeleteCardPopupOpen}
+              onClose={closeAllPopups}
+            />
+            <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+            <InfoTooltip
+              isOpen={isInfoTooltipOpen}
+              onClose={closeAllPopups}
+              isOK={isRegistrationOK}
+            />
+          </div>
         </div>
-      </div>
-    </CurrentUserContext.Provider>
+      </CurrentUserContext.Provider>
+    </BrowserRouter>
   );
 }
 
