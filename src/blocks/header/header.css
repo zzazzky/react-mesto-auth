@@ -1,0 +1,17 @@
+.header {
+  padding: 45px 0 40px 0;
+  border-bottom: 1px solid rgba(84, 84, 84, .7);
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  -moz-text-size-adjust: 100%;
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 28px 0 32px 0;
+  }
+}
