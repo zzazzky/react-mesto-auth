@@ -1,12 +1,18 @@
 import AuthorizationForm from "./AuthorizationForm";
+import { Link } from "react-router-dom";
 
 function Register(props) {
   return (
     <AuthorizationForm
-      onSubmit={props.onSubmit}
+      onAuthorizate={props.onAuthorizate}
       title="Регистрация"
       button="Зарегистрироваться"
-      capture="Уже зарегистрированы? Войти"
+      capture="Уже зарегистрированы? "
+      link={
+        <Link className="authorization__capture button" to="/sign-in">
+          Войти
+        </Link>
+      }
     />
   );
 }

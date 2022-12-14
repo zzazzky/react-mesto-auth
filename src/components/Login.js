@@ -3,7 +3,7 @@ import AuthorizationForm from "./AuthorizationForm";
 function Login(props) {
   return (
     <AuthorizationForm
-      onSubmit={props.onSubmit}
+      onAuthorizate={props.onAuthorizate}
       title="Вход"
       button="Войти"
       capture=""
