@@ -5,7 +5,7 @@ function Footer() {
       aria-label="Подвал сайта, информация о правообладателе"
     >
       <p className="footer__copyright" lang="en">
-        © 2020 Mesto Russia
+        © {new Date().getFullYear()} Mesto Russia
       </p>
     </footer>
   );

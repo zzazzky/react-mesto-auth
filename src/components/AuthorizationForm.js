@@ -20,7 +20,7 @@ function AuthorizationForm(props) {
     <div className="authorization">
       <form
         className="authorization__form"
-        name="login-form"
+        name={props.formName}
         noValidate
         onSubmit={handleSubmit}
       >

@@ -7,6 +7,7 @@ function Login(props) {
       title="Вход"
       button="Войти"
       capture=""
+      formName="login-form"
     />
   );
 }

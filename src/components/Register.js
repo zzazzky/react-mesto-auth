@@ -8,6 +8,7 @@ function Register(props) {
       title="Регистрация"
       button="Зарегистрироваться"
       capture="Уже зарегистрированы? "
+      formName="register-form"
       link={
         <Link className="authorization__capture button" to="/sign-in">
           Войти
